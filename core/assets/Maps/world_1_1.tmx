@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.2" tiledversion="1.2.3" orientation="orthogonal" renderorder="right-down" width="240" height="13" tilewidth="16" tileheight="16" infinite="0" nextlayerid="11" nextobjectid="100">
+ <tileset firstgid="1" source="../Tilesets/NES - Super Mario Bros - Tileset.tsx"/>
+ <layer id="1" name="BackgroundColor" width="240" height="13">
+  <data encoding="base64" compression="zlib">
+   eJztwzEJAAAMA7Ay/4bqrir2JZBeUlVVVVVVVVVVVVVV1ccDxULniQ==
+  </data>
+ </layer>
+ <layer id="8" name="GraphicsLayer3" width="240" height="13">
+  <data encoding="base64" compression="zlib">
+   eJzt1bENwCAMRUEYgVBnClbL/oqbNJRpwOhO+r2bJ5cCAAAAAAAAAPlcdfUFwB8t2h2xrmFI5Wt3aBhSuaPVZ+pXw7C/+e/CSV7ViwNV
+  </data>
+ </layer>
+ <layer id="2" name="GraphicsLayer1" width="240" height="13">
+  <data encoding="base64" compression="zlib">
+   eJztWMFuFDEMzWxPsC0S5bQUcegR6HJYFSSgv8JfwHl+oq0EFDjxCRQJqPbTcMRYsoyTOIlnMrR90tNGs2vHsf2SzDrn3MXCuc/AL8AaoB/KEp/cT21csTmsfV8E4ubzncLnGfB8hLXdVIRyP/X8dO4PMP4I/LSoi4/bfr0hfdNKJ6l5v8PzS+CPyrhof0wJXN9Zo/z+L/gJefkF/J2RH01use45OK2sV02vlfaLlU5yEZt3lbDNyVNJf1gA13dZmN9W+44Eqa8t4lt1ZXZSbnk8WPcSLZTqoabXavvFY049EwPPU+2+GYJVPjR++Bpa7TsSpL6m8ZWeHa8K9StBytd+968W5tDjvNZWMc2pZ3JQu296SD1olQ+NH4s1UCwYV2RsDensOAbtvEzo01K/HPfB90bwL9Vi6ndIXuucPrN4L5vDHmYNi/tLSxy2DmDAIWMMY+kXtSvpV0Krd8gSWPRpybkknQXSd5S30EGjFQ1eQ7+fVGiKa7eFfr123xP97g8cG3dgjrsTzHOL6wWtVnL8lPiStDu1fum5S/kO+GBkbT0B/0/JHKGzqhSp/3QtYXUe5GLMPXCHcDV8tkaOVmL3H8lXTv1C2q3R7y6hFpJ2Ub+bkTXM9dsa/i71puA+ZXUehBC7C1nlsGYfALse7PsxfFPEtKJ5B/H1fUHqW6K/mF2Nfr1mjwi1Gg7pl96nSzQcq9kSnu8C9zJ6L1Qfy3v+Q/B1AHyU4TNUO17HVG+FzjZ8t+E1kHKIuSjRS80+AHb9unPbI+AzoH9G98KY75T2ERqtSL1wPGjW/y/M61uiwZR2c/T7mIzvDVyTsQap8xe1nNIwzZMHrxnd+6DGDmrt1pVnB+9tHgPFty5ManfVxf1QSLVDW6mWWr90faEa8BzSXMT0IsWwJPuANkb6O69fsN/CfrJdDvr1uAr0AsVg24Ntvxx0zGOIaQV/R9eP9rymOEbk6lCjXWrHz3tHvsfaYk1Rs8/JWFMLSbv+59eNmwhTtm93/nKMuNA3ZetcjbXuOa9VE2/reLT8AyUs+Pk=
+  </data>
+ </layer>
+ <layer id="7" name="GraphicsLayer2" width="240" height="13">
+  <data encoding="base64" compression="zlib">
+   eJzt1U0KwjAQgNHmCNKdP/UQQV15FvWiPZsjRCwD4jIW3oMhJKtsPmYYAAAAAAAA4ONaev8A+GVKnd51C6twiFZrzLE1e2vnIzV8ivs55qJt+Aub1m5tTY7l++7dxvsuZq9f6G7Zbl00+Wo47963udjD0Ftut6YWR23C6j0BuRIHWQ==
+  </data>
+ </layer>
+ <objectgroup id="3" name="Ground">
+  <object id="2" x="0" y="192" width="1088" height="16"/>
+  <object id="3" x="1120" y="192" width="336" height="16"/>
+  <object id="4" x="1536" y="192" width="544" height="16"/>
+  <object id="5" x="2112" y="192" width="288" height="16"/>
+  <object id="6" x="2480" y="192" width="624" height="16"/>
+  <object id="7" x="3168" y="192" width="672" height="16"/>
+  <object id="82" x="3440" y="176" width="16" height="16"/>
+  <object id="83" x="3168" y="192">
+   <polygon points="0,0 0,-16 16,-16 16,-32 32,-32 32,-48 48,-48 48,-64 64,-64 64,-80 80,-80 80,-96 96,-96 96,-112 160,-112 160,0"/>
+  </object>
+  <object id="84" x="2976" y="192">
+   <polygon points="0,0 0,-80 64,-80 64,-64 80,-64 80,-48 96,-48 96,-32 112,-32 112,-16 128,-16 128,0"/>
+  </object>
+  <object id="85" x="2624" y="192">
+   <polygon points="0,0 0,-16 16,-16 16,-32 32,-32 32,-48 48,-48 48,-64 64,-64 64,-80 80,-80 80,-96 96,-96 96,-112 112,-112 112,0"/>
+  </object>
+  <object id="86" x="1184" y="192">
+   <polygon points="0,0 0,-16 16,-16 16,-32 32,-32 32,-48 48,-48 48,-64 80,-64 80,0"/>
+  </object>
+  <object id="87" x="1296" y="192">
+   <polygon points="0,0 0,-32 16,-32 16,-16 32,-16 32,0"/>
+  </object>
+ </objectgroup>
+ <objectgroup id="4" name="Pipes">
+  <object id="8" x="272" y="160" width="32" height="32"/>
+  <object id="24" x="384" y="160">
+   <polygon points="0,0 32,0 32,-48 64,-48 64,32 0,32"/>
+  </object>
+  <object id="25" x="1680" y="192">
+   <polygon points="0,0 0,-32 32,-32 32,-64 64,-64 64,0"/>
+  </object>
+  <object id="26" x="1984" y="176">
+   <polygon points="0,0 16,0 16,-32 48,-32 48,16 0,16"/>
+  </object>
+  <object id="27" x="2240" y="144">
+   <polygon points="0,0 32,0 32,16 64,16 64,48 0,48"/>
+  </object>
+  <object id="28" x="2480" y="160">
+   <polygon points="0,0 32,0 32,16 64,16 64,32 0,32"/>
+  </object>
+  <object id="29" x="1792" y="160" width="32" height="32"/>
+  <object id="30" x="2368" y="144" width="32" height="48"/>
+ </objectgroup>
+ <objectgroup id="5" name="Coins">
+  <object id="88" x="512" y="128" width="16" height="16">
+   <properties>
+    <property name="mushroom" value=""/>
+   </properties>
+  </object>
+  <object id="89" x="800" y="128" width="16" height="16"/>
+  <object id="90" x="1360" y="96" width="16" height="16"/>
+  <object id="91" x="1488" y="32" width="16" height="16"/>
+  <object id="92" x="2128" y="128" width="16" height="16"/>
+  <object id="93" x="2848" y="64" width="16" height="16"/>
+  <object id="94" x="2896" y="128" width="16" height="16"/>
+ </objectgroup>
+ <objectgroup id="9" name="Bricks">
+  <object id="33" x="480" y="128" width="16" height="16"/>
+  <object id="34" x="496" y="128" width="16" height="16"/>
+  <object id="36" x="528" y="128" width="16" height="16"/>
+  <object id="37" x="592" y="160" width="16" height="16"/>
+  <object id="38" x="608" y="160" width="16" height="16"/>
+  <object id="39" x="624" y="160" width="16" height="16"/>
+  <object id="47" x="1312" y="96" width="16" height="16"/>
+  <object id="48" x="1328" y="96" width="16" height="16"/>
+  <object id="49" x="1344" y="96" width="16" height="16"/>
+  <object id="51" x="1376" y="96" width="16" height="16"/>
+  <object id="52" x="1424" y="96" width="16" height="16"/>
+  <object id="53" x="1440" y="96" width="16" height="16"/>
+  <object id="54" x="1456" y="96" width="16" height="16"/>
+  <object id="55" x="1472" y="96" width="16" height="16"/>
+  <object id="56" x="1488" y="96" width="16" height="16"/>
+  <object id="57" x="1504" y="96" width="16" height="16"/>
+  <object id="59" x="1360" y="160" width="16" height="16"/>
+  <object id="60" x="1376" y="160" width="16" height="16"/>
+  <object id="61" x="1488" y="160" width="16" height="16"/>
+  <object id="62" x="2080" y="128" width="16" height="16"/>
+  <object id="63" x="2096" y="128" width="16" height="16"/>
+  <object id="64" x="2112" y="128" width="16" height="16"/>
+  <object id="66" x="2144" y="128" width="16" height="16"/>
+  <object id="67" x="2768" y="144" width="16" height="16"/>
+  <object id="68" x="2784" y="144" width="16" height="16"/>
+  <object id="69" x="2800" y="144" width="16" height="16"/>
+  <object id="70" x="2848" y="128" width="16" height="16"/>
+  <object id="71" x="2864" y="128" width="16" height="16"/>
+  <object id="72" x="2880" y="128" width="16" height="16"/>
+  <object id="74" x="2912" y="128" width="16" height="16"/>
+  <object id="75" x="2880" y="64" width="16" height="16"/>
+  <object id="76" x="2864" y="64" width="16" height="16"/>
+  <object id="78" x="2832" y="64" width="16" height="16"/>
+  <object id="79" x="2816" y="64" width="16" height="16"/>
+  <object id="80" x="2800" y="64" width="16" height="16"/>
+  <object id="81" x="2784" y="64" width="16" height="16"/>
+ </objectgroup>
+ <objectgroup id="10" name="Goombas">
+  <object id="95" x="1152" y="176" width="16" height="16"/>
+  <object id="96" x="1552" y="176" width="16" height="16"/>
+  <object id="97" x="1856" y="176" width="16" height="16"/>
+  <object id="98" x="2832" y="176" width="16" height="16"/>
+  <object id="99" x="2768" y="176" width="16" height="16"/>
+ </objectgroup>
+</map>
