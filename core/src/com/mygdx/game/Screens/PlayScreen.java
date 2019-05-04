@@ -59,7 +59,7 @@ public class PlayScreen implements Screen {
     private LinkedBlockingQueue<ItemDef> itemsToSpawn;
 
 
-    public PlayScreen(SuperMario game) {
+    public PlayScreen(SuperMario game, String mapSrc) {
         atlas = new TextureAtlas("Mario_and_Enemies.pack");
 
         this.game = game;
@@ -74,7 +74,7 @@ public class PlayScreen implements Screen {
 
         //Load our map and setup our map renderer
         maploader = new TmxMapLoader();
-        map = maploader.load("level1.tmx");
+        map = maploader.load(mapSrc);
         renderer = new OrthogonalTiledMapRenderer(map, 1 / SuperMario.PPM);
 
         //initially set our gamcam to be centered correctly at the start of of map
@@ -128,7 +128,7 @@ public class PlayScreen implements Screen {
 
     public void handleInput(float dt) {
         //control our player using immediate impulses
-        if (player.currentState != Mario.State.DEAD) {
+        if (player.currentState != Mario.State.DEAD && player.currentState != Mario.State.NEXTMAP) {
             if (Gdx.input.isKeyJustPressed(Input.Keys.UP))
                 player.jump();
             if (Gdx.input.isKeyPressed(Input.Keys.RIGHT) && player.b2body.getLinearVelocity().x <= 2)
@@ -164,13 +164,21 @@ public class PlayScreen implements Screen {
 
         //attach our gamecam to our players.x coordinate
         if (player.currentState != Mario.State.DEAD) {
-            gamecam.position.x = player.b2body.getPosition().x;
+            // Make sure to not show outside map
+            if (player.b2body.getPosition().x < 2)
+                gamecam.position.x = 2;
+            else if (player.b2body.getPosition().x > 36.4)
+                gamecam.position.x = 36.4f;
+            else
+                gamecam.position.x = player.b2body.getPosition().x;
         }
 
         //update our gamecam with correct coordinates after changes
         gamecam.update();
         //tell our renderer to draw only what our camera can see in our game world.
         renderer.setView(gamecam);
+
+//        System.out.println("X: " + player.b2body.getPosition().x + "    Y: " + player.b2body.getPosition().y);
 
     }
 
@@ -208,6 +216,17 @@ public class PlayScreen implements Screen {
             dispose();
         }
 
+//        if (nextGame()) {
+//            if (SuperMario.mapSourcesIterator.hasNext()){
+//                game.setScreen(new PlayScreen(game, SuperMario.mapSourcesIterator.next()));
+//            }
+//            else {
+//                SuperMario.mapSourcesIterator = SuperMario.mapSources.iterator();
+//                game.setScreen(new PlayScreen((SuperMario) game, SuperMario.mapSourcesIterator.next()));
+//            }
+//            dispose();
+//        }
+
     }
 
     public boolean gameOver() {
@@ -216,6 +235,13 @@ public class PlayScreen implements Screen {
         }
         return false;
     }
+
+//    public boolean nextGame() {
+//        if (player.currentState == Mario.State.NEXTMAP && player.getStateTimer() > 3) {
+//            return true;
+//        }
+//        return false;
+//    }
 
     @Override
     public void resize(int width, int height) {

@@ -16,6 +16,7 @@ import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.Timer;
 import com.mygdx.game.Screens.PlayScreen;
 import com.mygdx.game.Sprites.Enemies.Enemy;
 import com.mygdx.game.Sprites.Enemies.Turtle;
@@ -24,7 +25,7 @@ import com.mygdx.game.SuperMario;
 
 
 public class Mario extends Sprite {
-    public enum State {FALLING, JUMPING, STANDING, RUNNING, GROWING, DEAD}
+    public enum State {FALLING, JUMPING, STANDING, RUNNING, GROWING, DEAD, NEXTMAP}
 
     ;
     public State currentState;
@@ -41,7 +42,6 @@ public class Mario extends Sprite {
     private TextureRegion bigMarioJump;
     private Animation bigMarioRun;
     private Animation growMario;
-
     private float stateTimer;
     private boolean runningRight;
     private boolean marioIsBig;
@@ -49,6 +49,7 @@ public class Mario extends Sprite {
     private boolean timeToDefineBigMario;
     private boolean timeToRedefineMario;
     private boolean marioIsDead;
+    private boolean marioHasFinishedMap;
     private PlayScreen screen;
 
     private Array<FireBall> fireballs;
@@ -103,6 +104,7 @@ public class Mario extends Sprite {
         setBounds(0, 0, 16 / SuperMario.PPM, 16 / SuperMario.PPM);
         setRegion(marioStand);
 
+
         fireballs = new Array<FireBall>();
 
     }
@@ -114,6 +116,11 @@ public class Mario extends Sprite {
         // of "die music" and jumping
         // there is probably better ways to do that but it works for now.
         if (screen.getHud().isTimeUp() && !isDead()) {
+            die();
+        }
+
+        // Mario will die if he falls under the ground
+        if (b2body.getPosition().y < 0){
             die();
         }
 
@@ -157,6 +164,7 @@ public class Mario extends Sprite {
             case JUMPING:
                 region = marioIsBig ? bigMarioJump : marioJump;
                 break;
+            case NEXTMAP:
             case RUNNING:
                 region = (TextureRegion) (marioIsBig ? bigMarioRun.getKeyFrame(stateTimer, true) : marioRun.getKeyFrame(stateTimer, true));
                 break;
@@ -194,6 +202,8 @@ public class Mario extends Sprite {
         //if mario is going positive in Y-Axis he is jumping... or if he just jumped and is falling remain in jump state
         if (marioIsDead)
             return State.DEAD;
+        else if (marioHasFinishedMap)
+            return State.NEXTMAP;
         else if (runGrowAnimation)
             return State.GROWING;
         else if ((b2body.getLinearVelocity().y > 0 && currentState == State.JUMPING) || (b2body.getLinearVelocity().y < 0 && previousState == State.JUMPING))
@@ -237,8 +247,44 @@ public class Mario extends Sprite {
         }
     }
 
+    public void goNextMap() {
+
+        if (!hasFinishedMap()) {
+
+            SuperMario.manager.get("audio/music/mario_music.ogg", Music.class).stop();
+            SuperMario.manager.get("audio/sounds/stage_clear.wav", Sound.class).play();
+            marioHasFinishedMap = true;
+
+            Filter filter = new Filter();
+            filter.maskBits = SuperMario.GROUND_BIT |
+                    SuperMario.COIN_BIT |
+                    SuperMario.BRICK_BIT |
+                    SuperMario.ENEMY_BIT |
+                    SuperMario.OBJECT_BIT |
+                    SuperMario.ENEMY_HEAD_BIT |
+                    SuperMario.ITEM_BIT;
+
+            for (Fixture fixture : b2body.getFixtureList()) {
+                fixture.setFilterData(filter);
+            }
+
+            Timer.schedule(new Timer.Task(){
+                @Override
+                public void run() {
+                    while (true){
+                        b2body.applyLinearImpulse(new Vector2(0.05f, 0), b2body.getWorldCenter(), true);
+                    }
+                }
+            }, 1);
+        }
+    }
+
     public boolean isDead() {
         return marioIsDead;
+    }
+
+    public boolean hasFinishedMap() {
+        return marioHasFinishedMap;
     }
 
     public float getStateTimer() {
@@ -290,7 +336,9 @@ public class Mario extends Sprite {
                 SuperMario.ENEMY_BIT |
                 SuperMario.OBJECT_BIT |
                 SuperMario.ENEMY_HEAD_BIT |
-                SuperMario.ITEM_BIT;
+                SuperMario.ITEM_BIT |
+                SuperMario.POLE_BIT |
+                SuperMario.DOOR_BIT;
 
         fdef.shape = shape;
         b2body.createFixture(fdef).setUserData(this);
@@ -326,7 +374,9 @@ public class Mario extends Sprite {
                 SuperMario.ENEMY_BIT |
                 SuperMario.OBJECT_BIT |
                 SuperMario.ENEMY_HEAD_BIT |
-                SuperMario.ITEM_BIT;
+                SuperMario.ITEM_BIT |
+                SuperMario.POLE_BIT |
+                SuperMario.DOOR_BIT;
 
         fdef.shape = shape;
         b2body.createFixture(fdef).setUserData(this);
@@ -345,7 +395,7 @@ public class Mario extends Sprite {
 
     public void defineMario() {
         BodyDef bdef = new BodyDef();
-        bdef.position.set(32 / SuperMario.PPM, 32 / SuperMario.PPM);
+        bdef.position.set(31, 32 / SuperMario.PPM);
         bdef.type = BodyDef.BodyType.DynamicBody;
         b2body = world.createBody(bdef);
 
@@ -359,7 +409,9 @@ public class Mario extends Sprite {
                 SuperMario.ENEMY_BIT |
                 SuperMario.OBJECT_BIT |
                 SuperMario.ENEMY_HEAD_BIT |
-                SuperMario.ITEM_BIT;
+                SuperMario.ITEM_BIT |
+                SuperMario.POLE_BIT |
+                SuperMario.DOOR_BIT;
 
         fdef.shape = shape;
         b2body.createFixture(fdef).setUserData(this);
