@@ -118,7 +118,7 @@
  </layer>
  <layer id="2" name="Graphic Layer" width="240" height="13">
   <data encoding="base64" compression="zlib">
-   eJztl0tOwzAQhh3vgLYIWHXrJdAiAQWpN+MgwJpLFHq2brBpR50MHj9q5ylHfKpx/Phn7D9OtlKI7QFz4TK+tvI/XH2hUGgfafEvlHfyCHe963sfms8EDTBG6jgpc6fOO/QYiv4986rd2FPQf3+AR00d+Bb7Fy6u/K3LPwF55XK7kfsxXOM0tR82AfMOPYaiP5x1Fa+/K4wHpaj/z/nUdQ5DX9fa5Nwbqfvh1PGGGkPRHw74N/ceagLqXwN4Fcq285Z6F8aai/a0d40Ubri2KTmK7cvpgXvzA7b7Y0OJPb526wG9P4N/6WX77g3xb9fxFAo2lBinfyV5PsPvjoDrOJ8X/xb6iBLj9W+hMGaUyOffiTjSdVyp0O8wib6jmvyeOtO5Pa/q7+052oaSIz6ur2TGxbnmyiHjx8wJKGEv+1Di9L5U26n5Bg0UXz/Ov1Pdd6a5TNxPsC9Txugb5t37KyC2W33vDnnyOqJtX3HF0CXK4kFlySXVryxe4fo2rd2GT7/Nv+bMXSBSzmDYl12vb8y+C33m+GLDnrzSv4+aG6a9z7998I0vhpxrEINyeBDXUf2K8YqtDutPPZNwf6qB08Tl3+bf2eHsXYpjOXYNLnS7iWbasn9Xeq4XxGvl3ncr1A7qQp85uN2KzLlD92H+J4cOaJtDf47c0fFCYsi5BqHQ/Q5z0nqq3+UVWk/10/0Rqx/62zRwmrD+Z/IM4vz7gPz75lkDyr1us9AsM/jXHEuFOrlyU/KcP6eFOr8uW1So
+   eJztl0tOwzAQhifeAW0RsOrWS6BFAgpSb8ZBgDWXKPRs3eDQjjIZPI5dO0kTOeJTjZ//jP3nsVUA2wPlRcv02qr/SPWZTKZ7zN8fZZn6trx2qkK63k3bh+EzQgPOETtPzNqx6w49hqx/z7zoNvYYFFQ+Vcy31L8A9Xpe/jblH4+8SrndqP0crnnaOg8bj3WHHkPW78+6CNffF+hBBfX/bT51PYdxrGtvUp6N2PNw7HxDjSHr9wf9m/oMtQFeCup1O9bOPc29W1K2z6Fb/X2iwI3UNyZHoWMlPdg2P2BrHxsa9jT1Ww/w/Rk9TL3qeneW/Nt3PJmMDQ3j9C/6VjEfU/+iL23vz7Z+mcwpoWG8/s1kxoyGdP6dQEXfccXCv8MU+Y5q83vqzOT2vKi/t6fo60uK+KSxSpiX5loq+8wfsiaiwV5uQsPxY7m2Y/ONGjhN4yT/Ts3YmeEy8jzhuYyZ49Qo372/PGK7NW13xJPXAX1PFVcMfaItHtSWXHL92uIVaWzb2m006bf5t3zmLggxz2A8l33vb8i5873nNMVGPXllfh8NN0L/Jv+egm+aYki5ByFohwdpHdevBa/Y6qj+2GcSHc81SJqk/Nv8Ozs8e5dQlUP34ML0mximHft3ZdZ6IbwW7nO3Iv2wzveeQ/ut2Jo70o7rPzl0YN8U+lPkjs/nE0PKPfCFn3dck9dz/S6v8Hqun5+PUP043qZB0kT1P7N7kOTfB+Lft4Y94NybPgvDMoF/y8dSpk6q3OQ8p89pps4v4rpODA==
   </data>
  </layer>
  <objectgroup id="3" name="Ground">
@@ -236,6 +236,7 @@
   <object id="152" x="2352" y="176" width="16" height="16"/>
  </objectgroup>
  <objectgroup id="9" name="Pole">
+  <object id="164" x="3280.67" y="-5.66667" width="0.333333"/>
   <object id="165" x="3184" y="0" width="16" height="192"/>
  </objectgroup>
  <objectgroup id="10" name="Door">

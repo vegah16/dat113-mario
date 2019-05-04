@@ -5,7 +5,12 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.Screens.PlayScreen;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.Stack;
 
 public class SuperMario extends Game {
     //Virtual Screen size and Box2D Scale(Pixels Per Meter)
@@ -26,6 +31,11 @@ public class SuperMario extends Game {
     public static final short ITEM_BIT = 256;
     public static final short MARIO_HEAD_BIT = 512;
     public static final short FIREBALL_BIT = 1024;
+    public static final short POLE_BIT = 2048;
+    public static final short DOOR_BIT = 2048;
+
+    public static ArrayList<String> mapSources;
+    public static Iterator<String> mapSourcesIterator;
 
     public SpriteBatch batch;
 
@@ -47,10 +57,17 @@ public class SuperMario extends Game {
         manager.load("audio/sounds/powerdown.wav", Sound.class);
         manager.load("audio/sounds/stomp.wav", Sound.class);
         manager.load("audio/sounds/mariodie.wav", Sound.class);
+        manager.load("audio/sounds/stage_clear.wav", Sound.class);
 
         manager.finishLoading();
 
-        setScreen(new PlayScreen(this));
+        mapSources = new ArrayList<String>();
+        mapSources.add("level1.tmx");
+        mapSources.add("level2.tmx");
+        mapSources.add("level3.tmx");
+        mapSourcesIterator = mapSources.iterator();
+
+        setScreen(new PlayScreen(this, mapSourcesIterator.next()));
     }
 
 

@@ -6,6 +6,7 @@ import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Manifold;
+import com.mygdx.game.Screens.PlayScreen;
 import com.mygdx.game.Sprites.Enemies.Enemy;
 import com.mygdx.game.Sprites.Items.Item;
 import com.mygdx.game.Sprites.Mario;
@@ -70,6 +71,23 @@ public class WorldContactListener implements ContactListener {
                 else
                     ((FireBall) fixB.getUserData()).setToDestroy();
                 break;
+            case SuperMario.MARIO_BIT | SuperMario.POLE_BIT:
+                if (fixA.getFilterData().categoryBits == SuperMario.MARIO_BIT)
+                    ((Mario) fixA.getUserData()).goNextMap();
+                else
+                    ((Mario) fixB.getUserData()).goNextMap();
+                break;
+            case SuperMario.MARIO_BIT | SuperMario.DOOR_BIT:
+                if (SuperMario.mapSourcesIterator.hasNext()){
+                    SuperMario.setScreen(new PlayScreen(game, SuperMario.mapSourcesIterator.next()));
+                }
+                else {
+                    SuperMario.mapSourcesIterator = SuperMario.mapSources.iterator();
+                    game.setScreen(new PlayScreen((SuperMario) game, SuperMario.mapSourcesIterator.next()));
+                }
+                dispose();
+                break;
+
         }
     }
 

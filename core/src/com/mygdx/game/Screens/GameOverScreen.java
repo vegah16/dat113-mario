@@ -2,6 +2,7 @@ package com.mygdx.game.Screens;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
@@ -49,8 +50,14 @@ public class GameOverScreen implements Screen {
 
     @Override
     public void render(float delta) {
-        if (Gdx.input.justTouched()) {
-            game.setScreen(new PlayScreen((SuperMario) game));
+        if (Gdx.input.justTouched() || Gdx.input.isKeyJustPressed(Input.Keys.ANY_KEY)) {
+            if (SuperMario.mapSourcesIterator.hasNext()){
+                game.setScreen(new PlayScreen((SuperMario) game, SuperMario.mapSourcesIterator.next()));
+            }
+            else {
+                SuperMario.mapSourcesIterator = SuperMario.mapSources.iterator();
+                game.setScreen(new PlayScreen((SuperMario) game, SuperMario.mapSourcesIterator.next()));
+            }
             dispose();
         }
         Gdx.gl.glClearColor(0, 0, 0, 1);
