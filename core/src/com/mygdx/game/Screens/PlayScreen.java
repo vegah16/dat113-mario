@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -128,9 +129,10 @@ public class PlayScreen implements Screen {
     }
 
     public void handleInput(float dt) {
-        // Temporarily terminates program when pressing ESCAPE
-        // TODO: Implement termination in menu instead
+        // Enters menu
         if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)){
+            SuperMario.manager.get("audio/sounds/pause.wav", Sound.class).play();
+            music.stop();
             game.setScreen(new MenuScreen(game));
         }
 
@@ -233,7 +235,7 @@ public class PlayScreen implements Screen {
                 else {
                     var previousMap = SuperMario.mapSourcesIterator.previous();
                     game.setScreen(new PlayScreen(game, SuperMario.mapSourcesIterator.next()));
-                    Hud.setWorldTimer(300);
+                    Hud.setWorldTimer(100);
                 }
             }
             // Game is finished

@@ -66,6 +66,8 @@ public class SuperMario extends Game {
         manager.load("audio/sounds/stage_clear.wav", Sound.class);
         manager.load("audio/sounds/jump.wav", Sound.class);
         manager.load("audio/sounds/jump_big.wav", Sound.class);
+        manager.load("audio/sounds/pause.wav", Sound.class);
+        manager.load("audio/sounds/fireball.wav", Sound.class);
 
         manager.finishLoading();
 

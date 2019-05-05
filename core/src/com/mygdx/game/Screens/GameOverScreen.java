@@ -51,6 +51,7 @@ public class GameOverScreen implements Screen {
         bitmapFontScaled2x.getData().setScale(2.5f);
         Label gameTitle = new Label("Game Over", new Label.LabelStyle(bitmapFont, Color.RED));
 
+        Label score = new Label("Total Score: " + Hud.getScore(), new Label.LabelStyle(bitmapFont, Color.WHITE));
 
         TextButton playAgainButton = new TextButton("Play again", buttonStyle);
         playAgainButton.padTop(10);
@@ -75,6 +76,7 @@ public class GameOverScreen implements Screen {
 
         menu.addListener(new InputListener() {
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+                Hud.reset();
                 game.setScreen(new MenuScreen(game));
                 dispose();
                 return true;
@@ -86,6 +88,8 @@ public class GameOverScreen implements Screen {
         });
 
         table.add(gameTitle);
+        table.row();
+        table.add(score);
         table.row();
         table.add(playAgainButton);
         table.row();

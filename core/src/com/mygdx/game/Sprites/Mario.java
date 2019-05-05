@@ -121,7 +121,7 @@ public class Mario extends Sprite {
         frames.clear();
 
         for (int i = 1; i < 4; i++)
-            frames.add(new TextureRegion(screen.getAtlas().findRegion("big_mario"), i * 16, 0, 16, 32));
+            frames.add(new TextureRegion(screen.getAtlas().findRegion("little_mario"), i * 16, 0, 16, 16));
         invincibleMarioRun = new Animation(0.1f, frames);
 
         frames.clear();
@@ -143,13 +143,13 @@ public class Mario extends Sprite {
         //get jump animation frames and add them to marioJump Animation
         marioJump = new TextureRegion(screen.getAtlas().findRegion("little_mario"), 80, 0, 16, 16);
         bigMarioJump = new TextureRegion(screen.getAtlas().findRegion("big_mario"), 80, 0, 16, 32);
-        invincibleMarioJump = new TextureRegion(screen.getAtlas().findRegion("big_mario"), 0, 0, 16, 32);
+        invincibleMarioJump = new TextureRegion(screen.getAtlas().findRegion("little_mario"), 80, 0, 16, 16);
         fireMarioJump = new TextureRegion(screen.getAtlas().findRegion("little_mario"), 80, 0, 16, 16);
 
         //create texture region for mario standing
         marioStand = new TextureRegion(screen.getAtlas().findRegion("little_mario"), 0, 0, 16, 16);
         bigMarioStand = new TextureRegion(screen.getAtlas().findRegion("big_mario"), 0, 0, 16, 32);
-        invincibleMarioStand = new TextureRegion(screen.getAtlas().findRegion("big_mario"), 0, 0, 16, 32);
+        invincibleMarioStand = new TextureRegion(screen.getAtlas().findRegion("little_mario"), 80, 0, 16, 16);
         fireMarioStand = new TextureRegion(screen.getAtlas().findRegion("little_mario"), 0, 0, 16, 16);
 
         //create dead mario texture region
@@ -180,10 +180,7 @@ public class Mario extends Sprite {
             }
         }
 
-        // time is up : too late mario dies T_T
-        // the !isDead() method is used to prevent multiple invocation
-        // of "die music" and jumping
-        // there is probably better ways to do that but it works for now.
+
         if (SuperMario.getHud().isTimeUp() && !isDead()) {
             die();
         }
@@ -197,7 +194,7 @@ public class Mario extends Sprite {
         if (marioIsBig)
             setPosition(b2body.getPosition().x - getWidth() / 2, b2body.getPosition().y - getHeight() / 2 - 6 / SuperMario.PPM);
         else if (marioIsInvincible)
-            setPosition(b2body.getPosition().x - getWidth() / 2, b2body.getPosition().y - getHeight() / 2 - 6 / SuperMario.PPM);
+            setPosition(b2body.getPosition().x - getWidth() / 2, b2body.getPosition().y - getHeight() / 2);
         else if (marioIsFire)
             setPosition(b2body.getPosition().x - getWidth() / 2, b2body.getPosition().y - getHeight() / 2);
         else
@@ -335,10 +332,10 @@ public class Mario extends Sprite {
 
     public void growInvincible() {
         if (!isInvincible()) {
-            runGrowAnimation = true;
+            runGrowAnimation = false;
             marioIsInvincible = true;
             timeToDefineInvincibleMario = true;
-            setBounds(getX(), getY(), getWidth(), getHeight() * 2);
+            setBounds(getX(), getY(), getWidth(), getHeight());
             SuperMario.manager.get("audio/sounds/coin.wav", Sound.class).play();
 
             Timer.schedule(new Timer.Task(){
@@ -346,7 +343,7 @@ public class Mario extends Sprite {
                 public void run() {
                     marioIsInvincible = false;
                     timeToRedefineMario = true;
-                    setBounds(getX(), getY(), getWidth(), getHeight() / 2);
+                    setBounds(getX(), getY(), getWidth(), getHeight());
                     SuperMario.manager.get("audio/sounds/powerdown.wav", Sound.class).play();
                 }
             }, 10);
@@ -404,7 +401,7 @@ public class Mario extends Sprite {
             // Update HUD
             Hud.setPause(true);
             Hud.addScore(Hud.getWorldTimer() * 50);
-            Hud.setWorldTimer(300);
+            Hud.setWorldTimer(100);
 
             Filter filter = new Filter();
             filter.categoryBits = SuperMario.MARIO_BIT;
@@ -562,11 +559,11 @@ public class Mario extends Sprite {
     }
 
     public void defineInvincibleMario() {
-        Vector2 currentPosition = b2body.getPosition();
+        Vector2 position = b2body.getPosition();
         world.destroyBody(b2body);
 
         BodyDef bdef = new BodyDef();
-        bdef.position.set(currentPosition.add(0, 10 / SuperMario.PPM));
+        bdef.position.set(position);
         bdef.type = BodyDef.BodyType.DynamicBody;
         b2body = world.createBody(bdef);
 
@@ -580,11 +577,11 @@ public class Mario extends Sprite {
                 SuperMario.ENEMY_BIT |
                 SuperMario.OBJECT_BIT |
                 SuperMario.ENEMY_HEAD_BIT |
-                SuperMario.ITEM_BIT;
+                SuperMario.ITEM_BIT |
+                SuperMario.POLE_BIT |
+                SuperMario.DOOR_BIT;
 
         fdef.shape = shape;
-        b2body.createFixture(fdef).setUserData(this);
-        shape.setPosition(new Vector2(0, -14 / SuperMario.PPM));
         b2body.createFixture(fdef).setUserData(this);
 
         EdgeShape head = new EdgeShape();
@@ -597,7 +594,8 @@ public class Mario extends Sprite {
         timeToDefineInvincibleMario = false;
     }
 
-    public void defineFireMario() {Vector2 position = b2body.getPosition();
+    public void defineFireMario() {
+        Vector2 position = b2body.getPosition();
         world.destroyBody(b2body);
 
         BodyDef bdef = new BodyDef();
@@ -668,6 +666,7 @@ public class Mario extends Sprite {
     }
 
     public void fire() {
+        SuperMario.manager.get("audio/sounds/fireball.wav", Sound.class).play();
         fireballs.add(new FireBall(screen, b2body.getPosition().x, b2body.getPosition().y, runningRight ? true : false));
     }
 

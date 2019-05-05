@@ -36,7 +36,7 @@ public class Hud implements Disposable {
 
     public Hud(SpriteBatch sb) {
         //define our tracking variables
-        worldTimer = 300;
+        worldTimer = 100;
         timeCount = 0;
         score = 0;
         pause = false;
@@ -98,7 +98,7 @@ public class Hud implements Disposable {
     }
 
     public static void reset(){
-        setWorldTimer(300);
+        setWorldTimer(100);
         levelLabel.setText("1-1");
         setScore(0);
         setPause(false);
