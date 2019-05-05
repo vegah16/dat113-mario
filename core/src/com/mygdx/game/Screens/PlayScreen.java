@@ -127,6 +127,11 @@ public class PlayScreen implements Screen {
     }
 
     public void handleInput(float dt) {
+        // Temporarily terminates program when pressing ESCAPE
+        // TODO: Implement termination in menu instead
+        if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE))
+            System.exit(0);
+
         //control our player using immediate impulses
         if (player.currentState != Mario.State.DEAD && player.currentState != Mario.State.NEXTMAP) {
             if (Gdx.input.isKeyJustPressed(Input.Keys.UP))
@@ -216,16 +221,16 @@ public class PlayScreen implements Screen {
             dispose();
         }
 
-//        if (nextGame()) {
-//            if (SuperMario.mapSourcesIterator.hasNext()){
-//                game.setScreen(new PlayScreen(game, SuperMario.mapSourcesIterator.next()));
-//            }
-//            else {
-//                SuperMario.mapSourcesIterator = SuperMario.mapSources.iterator();
-//                game.setScreen(new PlayScreen((SuperMario) game, SuperMario.mapSourcesIterator.next()));
-//            }
-//            dispose();
-//        }
+        if (nextGame()) {
+            if (SuperMario.mapSourcesIterator.hasNext()){
+                game.setScreen(new PlayScreen(game, SuperMario.mapSourcesIterator.next()));
+            }
+            else {
+                SuperMario.mapSourcesIterator = SuperMario.mapSources.iterator();
+                game.setScreen(new PlayScreen(game, SuperMario.mapSourcesIterator.next()));
+            }
+            dispose();
+        }
 
     }
 
@@ -236,12 +241,12 @@ public class PlayScreen implements Screen {
         return false;
     }
 
-//    public boolean nextGame() {
-//        if (player.currentState == Mario.State.NEXTMAP && player.getStateTimer() > 3) {
-//            return true;
-//        }
-//        return false;
-//    }
+    public boolean nextGame() {
+        if (player.currentState == Mario.State.NEXTMAP && player.getStateTimer() > 5.5) {
+            return true;
+        }
+        return false;
+    }
 
     @Override
     public void resize(int width, int height) {

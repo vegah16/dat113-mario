@@ -71,6 +71,16 @@ public class WorldContactListener implements ContactListener {
                 else
                     ((FireBall) fixB.getUserData()).setToDestroy();
                 break;
+            case SuperMario.FIREBALL_BIT | SuperMario.ENEMY_BIT:
+                if (fixA.getFilterData().categoryBits == SuperMario.ENEMY_BIT) {
+                    ((Enemy) fixA.getUserData()).setToDestroy();
+                    ((FireBall) fixB.getUserData()).setToDestroy();
+                }
+                else {
+                    ((Enemy) fixB.getUserData()).setToDestroy();
+                    ((FireBall) fixA.getUserData()).setToDestroy();
+                }
+                break;
             case SuperMario.MARIO_BIT | SuperMario.POLE_BIT:
                 if (fixA.getFilterData().categoryBits == SuperMario.MARIO_BIT)
                     ((Mario) fixA.getUserData()).goNextMap();
@@ -78,14 +88,10 @@ public class WorldContactListener implements ContactListener {
                     ((Mario) fixB.getUserData()).goNextMap();
                 break;
             case SuperMario.MARIO_BIT | SuperMario.DOOR_BIT:
-                if (SuperMario.mapSourcesIterator.hasNext()){
-                    SuperMario.setScreen(new PlayScreen(game, SuperMario.mapSourcesIterator.next()));
-                }
-                else {
-                    SuperMario.mapSourcesIterator = SuperMario.mapSources.iterator();
-                    game.setScreen(new PlayScreen((SuperMario) game, SuperMario.mapSourcesIterator.next()));
-                }
-                dispose();
+                if (fixA.getFilterData().categoryBits == SuperMario.MARIO_BIT)
+                    ((Mario) fixA.getUserData()).setDestroy(true);
+                else
+                    ((Mario) fixB.getUserData()).setDestroy(true);
                 break;
 
         }

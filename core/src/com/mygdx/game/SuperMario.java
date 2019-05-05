@@ -32,7 +32,7 @@ public class SuperMario extends Game {
     public static final short MARIO_HEAD_BIT = 512;
     public static final short FIREBALL_BIT = 1024;
     public static final short POLE_BIT = 2048;
-    public static final short DOOR_BIT = 2048;
+    public static final short DOOR_BIT = 4096;
 
     public static ArrayList<String> mapSources;
     public static Iterator<String> mapSourcesIterator;
@@ -58,6 +58,8 @@ public class SuperMario extends Game {
         manager.load("audio/sounds/stomp.wav", Sound.class);
         manager.load("audio/sounds/mariodie.wav", Sound.class);
         manager.load("audio/sounds/stage_clear.wav", Sound.class);
+        manager.load("audio/sounds/jump.wav", Sound.class);
+        manager.load("audio/sounds/jump_big.wav", Sound.class);
 
         manager.finishLoading();
 

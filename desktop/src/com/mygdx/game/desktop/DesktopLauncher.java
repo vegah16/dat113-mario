@@ -10,7 +10,7 @@ public class DesktopLauncher {
 
 	public static void main (String[] arg) {
 
-		fullscreen = false;
+		fullscreen = true ;
 
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 

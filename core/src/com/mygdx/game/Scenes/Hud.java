@@ -20,10 +20,11 @@ public class Hud implements Disposable {
     private Viewport viewport;
 
     //Mario score/time Tracking Variables
-    private Integer worldTimer;
+    private static Integer worldTimer;
     private boolean timeUp; // true when the world timer reaches 0
-    private float timeCount;
+    private static float timeCount;
     private static Integer score;
+    private static boolean pause;
 
     //Scene2D widgets
     private Label countdownLabel;
@@ -38,6 +39,7 @@ public class Hud implements Disposable {
         worldTimer = 300;
         timeCount = 0;
         score = 0;
+        pause = false;
 
 
         //setup the HUD viewport using a new camera seperate from our gamecam
@@ -76,15 +78,17 @@ public class Hud implements Disposable {
     }
 
     public void update(float dt) {
-        timeCount += dt;
-        if (timeCount >= 1) {
-            if (worldTimer > 0) {
-                worldTimer--;
-            } else {
-                timeUp = true;
+        if (!pause){
+            timeCount += dt;
+            if (timeCount >= 1) {
+                if (worldTimer > 0) {
+                    worldTimer--;
+                } else {
+                    timeUp = true;
+                }
+                countdownLabel.setText(String.format("%03d", worldTimer));
+                timeCount = 0;
             }
-            countdownLabel.setText(String.format("%03d", worldTimer));
-            timeCount = 0;
         }
     }
 
@@ -100,5 +104,21 @@ public class Hud implements Disposable {
 
     public boolean isTimeUp() {
         return timeUp;
+    }
+
+    public static Integer getWorldTimer() {
+        return worldTimer;
+    }
+
+    public static void setWorldTimer(Integer worldTimer) {
+        Hud.worldTimer = worldTimer;
+    }
+
+    public static boolean isPause() {
+        return pause;
+    }
+
+    public static void setPause(boolean pause) {
+        Hud.pause = pause;
     }
 }

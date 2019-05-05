@@ -10,6 +10,7 @@ import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.utils.Array;
+import com.mygdx.game.Scenes.Hud;
 import com.mygdx.game.Screens.PlayScreen;
 import com.mygdx.game.Sprites.Mario;
 import com.mygdx.game.SuperMario;
@@ -19,8 +20,6 @@ public class Goomba extends Enemy {
     private float stateTime;
     private Animation walkAnimation;
     private Array<TextureRegion> frames;
-    private boolean setToDestroy;
-    private boolean destroyed;
     float angle;
 
 
@@ -42,6 +41,7 @@ public class Goomba extends Enemy {
         if (setToDestroy && !destroyed) {
             world.destroyBody(b2body);
             destroyed = true;
+            Hud.addScore(100);
             setRegion(new TextureRegion(screen.getAtlas().findRegion("goomba"), 32, 0, 16, 16));
             stateTime = 0;
         } else if (!destroyed) {
@@ -67,7 +67,8 @@ public class Goomba extends Enemy {
                 SuperMario.BRICK_BIT |
                 SuperMario.ENEMY_BIT |
                 SuperMario.OBJECT_BIT |
-                SuperMario.MARIO_BIT;
+                SuperMario.MARIO_BIT |
+                SuperMario.FIREBALL_BIT;
 
         fdef.shape = shape;
         b2body.createFixture(fdef).setUserData(this);
@@ -106,5 +107,15 @@ public class Goomba extends Enemy {
             setToDestroy = true;
         else
             reverseVelocity(true, false);
+    }
+
+    @Override
+    public boolean isSetToDestroy() {
+        return setToDestroy;
+    }
+
+    @Override
+    public void setToDestroy() {
+        this.setToDestroy = true;
     }
 }

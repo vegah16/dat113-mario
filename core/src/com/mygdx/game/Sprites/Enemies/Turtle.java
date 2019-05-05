@@ -1,6 +1,7 @@
 package com.mygdx.game.Sprites.Enemies;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
@@ -8,6 +9,7 @@ import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.utils.Array;
+import com.mygdx.game.Scenes.Hud;
 import com.mygdx.game.Screens.PlayScreen;
 import com.mygdx.game.Sprites.Mario;
 import com.mygdx.game.SuperMario;
@@ -25,8 +27,6 @@ public class Turtle extends Enemy {
     private Animation walkAnimation;
     private Array<TextureRegion> frames;
     private TextureRegion shell;
-    private boolean setToDestroy;
-    private boolean destroyed;
 
 
     public Turtle(PlayScreen screen, float x, float y) {
@@ -58,7 +58,8 @@ public class Turtle extends Enemy {
                 SuperMario.BRICK_BIT |
                 SuperMario.ENEMY_BIT |
                 SuperMario.OBJECT_BIT |
-                SuperMario.MARIO_BIT;
+                SuperMario.MARIO_BIT |
+                SuperMario.FIREBALL_BIT;
 
         fdef.shape = shape;
         b2body.createFixture(fdef).setUserData(this);
@@ -107,15 +108,26 @@ public class Turtle extends Enemy {
 
     @Override
     public void update(float dt) {
-        setRegion(getFrame(dt));
-        if (currentState == State.STANDING_SHELL && stateTime > 5) {
-            currentState = State.WALKING;
-            velocity.x = 1;
-            System.out.println("WAKE UP SHELL");
-        }
+        if (setToDestroy && !destroyed) {
+            world.destroyBody(b2body);
+            destroyed = true;
+            Hud.addScore(200);
+        } else if (!destroyed) {
+            setRegion(getFrame(dt));
+            if (currentState == State.STANDING_SHELL && stateTime > 5) {
+                currentState = State.WALKING;
+                velocity.x = 1;
+                System.out.println("WAKE UP SHELL");
+            }
 
-        setPosition(b2body.getPosition().x - getWidth() / 2, b2body.getPosition().y - 8 / SuperMario.PPM);
-        b2body.setLinearVelocity(velocity);
+            setPosition(b2body.getPosition().x - getWidth() / 2, b2body.getPosition().y - 8 / SuperMario.PPM);
+            b2body.setLinearVelocity(velocity);
+        }
+    }
+
+    public void draw(Batch batch) {
+        if (!destroyed || stateTime < 1)
+            super.draw(batch);
     }
 
     @Override
@@ -136,6 +148,16 @@ public class Turtle extends Enemy {
     @Override
     public void hitByEnemy(Enemy enemy) {
         reverseVelocity(true, false);
+    }
+
+    @Override
+    public boolean isSetToDestroy() {
+        return setToDestroy;
+    }
+
+    @Override
+    public void setToDestroy() {
+        setToDestroy = true;
     }
 
     public void kick(int direction) {
