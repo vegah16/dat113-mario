@@ -1,9 +1,11 @@
 package com.mygdx.game.Sprites.Items;
 
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
+import com.mygdx.game.Scenes.Hud;
 import com.mygdx.game.Screens.PlayScreen;
 import com.mygdx.game.Sprites.Mario;
 import com.mygdx.game.SuperMario;
@@ -41,6 +43,8 @@ public class Mushroom extends Item {
     public void use(Mario mario) {
         destroy();
         mario.grow();
+        Hud.addScore(1000);
+        SuperMario.manager.get("audio/sounds/powerup.wav", Sound.class).play();
     }
 
     @Override

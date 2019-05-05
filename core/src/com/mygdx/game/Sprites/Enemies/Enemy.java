@@ -12,7 +12,10 @@ public abstract class Enemy extends Sprite {
     protected World world;
     protected PlayScreen screen;
     public Body b2body;
-    public Vector2 velocity;
+    Vector2 velocity;
+
+    public boolean setToDestroy;
+    public boolean destroyed;
 
     public Enemy(PlayScreen screen, float x, float y) {
         this.world = screen.getWorld();
@@ -30,6 +33,11 @@ public abstract class Enemy extends Sprite {
     public abstract void hitOnHead(Mario mario);
 
     public abstract void hitByEnemy(Enemy enemy);
+
+
+    public abstract boolean isSetToDestroy();
+
+    public abstract void setToDestroy();
 
     public void reverseVelocity(boolean x, boolean y) {
         if (x)
