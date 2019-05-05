@@ -121,7 +121,7 @@ public class Mario extends Sprite {
         frames.clear();
 
         for (int i = 1; i < 4; i++)
-            frames.add(new TextureRegion(screen.getAtlas().findRegion("little_mario"), i * 16, 0, 16, 16));
+            frames.add(new TextureRegion(screen.getAtlas().findRegion("big_mario"), i * 16, 0, 16, 32));
         invincibleMarioRun = new Animation(0.1f, frames);
 
         frames.clear();
@@ -143,13 +143,13 @@ public class Mario extends Sprite {
         //get jump animation frames and add them to marioJump Animation
         marioJump = new TextureRegion(screen.getAtlas().findRegion("little_mario"), 80, 0, 16, 16);
         bigMarioJump = new TextureRegion(screen.getAtlas().findRegion("big_mario"), 80, 0, 16, 32);
-        invincibleMarioJump = new TextureRegion(screen.getAtlas().findRegion("little_mario"), 80, 0, 16, 16);
+        invincibleMarioJump = new TextureRegion(screen.getAtlas().findRegion("big_mario"), 0, 0, 16, 32);
         fireMarioJump = new TextureRegion(screen.getAtlas().findRegion("little_mario"), 80, 0, 16, 16);
 
         //create texture region for mario standing
         marioStand = new TextureRegion(screen.getAtlas().findRegion("little_mario"), 0, 0, 16, 16);
         bigMarioStand = new TextureRegion(screen.getAtlas().findRegion("big_mario"), 0, 0, 16, 32);
-        invincibleMarioStand = new TextureRegion(screen.getAtlas().findRegion("little_mario"), 0, 0, 16, 16);
+        invincibleMarioStand = new TextureRegion(screen.getAtlas().findRegion("big_mario"), 0, 0, 16, 32);
         fireMarioStand = new TextureRegion(screen.getAtlas().findRegion("little_mario"), 0, 0, 16, 16);
 
         //create dead mario texture region
@@ -595,12 +595,11 @@ public class Mario extends Sprite {
         timeToDefineInvincibleMario = false;
     }
 
-    public void defineFireMario() {
-        Vector2 currentPosition = b2body.getPosition();
+    public void defineFireMario() {Vector2 position = b2body.getPosition();
         world.destroyBody(b2body);
 
         BodyDef bdef = new BodyDef();
-        bdef.position.set(currentPosition.add(0, 0 / SuperMario.PPM));
+        bdef.position.set(position);
         bdef.type = BodyDef.BodyType.DynamicBody;
         b2body = world.createBody(bdef);
 
@@ -614,11 +613,11 @@ public class Mario extends Sprite {
                 SuperMario.ENEMY_BIT |
                 SuperMario.OBJECT_BIT |
                 SuperMario.ENEMY_HEAD_BIT |
-                SuperMario.ITEM_BIT;
+                SuperMario.ITEM_BIT |
+                SuperMario.POLE_BIT |
+                SuperMario.DOOR_BIT;
 
         fdef.shape = shape;
-        b2body.createFixture(fdef).setUserData(this);
-        shape.setPosition(new Vector2(0, -14 / SuperMario.PPM));
         b2body.createFixture(fdef).setUserData(this);
 
         EdgeShape head = new EdgeShape();
@@ -628,6 +627,7 @@ public class Mario extends Sprite {
         fdef.isSensor = true;
 
         b2body.createFixture(fdef).setUserData(this);
+
         timeToDefineFireMario = false;
     }
 
