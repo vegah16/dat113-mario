@@ -12,7 +12,7 @@ import com.mygdx.game.SuperMario;
 public class Star extends Item {
     public Star(PlayScreen screen, float x, float y) {
         super(screen, x, y);
-        setRegion(screen.getAtlas().findRegion("goomba"), 0, 0, 16, 16);
+        setRegion(screen.getAtlas().findRegion("star"), 0, 0, 16, 16);
      velocity = new Vector2(0.7f, 0);
     }
 

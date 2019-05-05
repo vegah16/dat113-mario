@@ -21,7 +21,7 @@ public class Hud implements Disposable {
 
     //Mario score/time Tracking Variables
     private static Integer worldTimer;
-    private boolean timeUp; // true when the world timer reaches 0
+    private static boolean timeUp; // true when the world timer reaches 0
     private static float timeCount;
     private static Integer score;
     private static boolean pause;
@@ -102,6 +102,7 @@ public class Hud implements Disposable {
         levelLabel.setText("1-1");
         setScore(0);
         setPause(false);
+        timeUp = false;
     }
 
     @Override

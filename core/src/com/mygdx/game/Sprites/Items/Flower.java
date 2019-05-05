@@ -11,7 +11,7 @@ import com.mygdx.game.SuperMario;
 public class Flower extends Item {
     public Flower(PlayScreen screen, float x, float y) {
         super(screen, x, y);
-        setRegion(screen.getAtlas().findRegion("turtle"), 64, 0, 16, 24);
+        setRegion(screen.getAtlas().findRegion("flower"), 0, 0, 16, 16);
         velocity = new Vector2(0.4f, 0);
     }
 

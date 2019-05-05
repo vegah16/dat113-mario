@@ -58,7 +58,7 @@ public class PlayScreen implements Screen {
 
 
     public PlayScreen(SuperMario game, String mapSrc) {
-        atlas = new TextureAtlas("Mario_and_Enemies.pack");
+        atlas = new TextureAtlas("Mario_and_Enemies1.pack");
 
         this.game = game;
         //create cam used to follow mario through cam world
@@ -273,8 +273,8 @@ public class PlayScreen implements Screen {
     }
 
     public boolean nextGame() {
-//        if (player.currentState == Mario.State.NEXTMAP && player.getStateTimer() > 5.5) {
-        if (player.currentState == Mario.State.NEXTMAP && player.getStateTimer() > 0) {
+        if (player.currentState == Mario.State.NEXTMAP && player.getStateTimer() > 5.5) {
+//        if (player.currentState == Mario.State.NEXTMAP && player.getStateTimer() > 0) {
             return true;
         }
         return false;
