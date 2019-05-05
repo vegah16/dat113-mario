@@ -7,6 +7,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.Scenes.Hud;
 import com.mygdx.game.Screens.PlayScreen;
+import com.mygdx.game.Sprites.Items.Flower;
 import com.mygdx.game.Sprites.Items.ItemDef;
 import com.mygdx.game.Sprites.Items.Mushroom;
 import com.mygdx.game.Sprites.Items.Star;
@@ -39,6 +40,12 @@ public class Coin extends InteractiveTileObject {
             if (object.getProperties().containsKey("star")) {
                 screen.spawnItem(new ItemDef(new Vector2(body.getPosition().x, body.getPosition().y + 16 / SuperMario.PPM),
                         Star.class));
+                SuperMario.manager.get("audio/sounds/coin.wav", Sound.class).play();
+
+            }
+            if (object.getProperties().containsKey("flower")) {
+                screen.spawnItem(new ItemDef(new Vector2(body.getPosition().x, body.getPosition().y + 16 / SuperMario.PPM),
+                        Flower.class));
                 SuperMario.manager.get("audio/sounds/coin.wav", Sound.class).play();
 
             }
