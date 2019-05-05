@@ -21,6 +21,7 @@ import com.mygdx.game.Sprites.Enemies.Enemy;
 import com.mygdx.game.Sprites.Items.Item;
 import com.mygdx.game.Sprites.Items.ItemDef;
 import com.mygdx.game.Sprites.Items.Mushroom;
+import com.mygdx.game.Sprites.Items.Star;
 import com.mygdx.game.Sprites.Mario;
 import com.mygdx.game.SuperMario;
 import com.mygdx.game.Tools.B2WorldCreator;
@@ -111,6 +112,9 @@ public class PlayScreen implements Screen {
             ItemDef idef = itemsToSpawn.poll();
             if (idef.type == Mushroom.class) {
                 items.add(new Mushroom(this, idef.position.x, idef.position.y));
+            }
+            if (idef.type == Star.class) {
+                items.add(new Star(this, idef.position.x, idef.position.y));
             }
         }
     }
