@@ -58,7 +58,7 @@ public class PlayScreen implements Screen {
 
 
     public PlayScreen(SuperMario game, String mapSrc) {
-        atlas = new TextureAtlas("Mario_and_Enemies1.pack");
+        atlas = new TextureAtlas("Mario_and_Enemies.pack");
 
         this.game = game;
         //create cam used to follow mario through cam world
@@ -146,7 +146,8 @@ public class PlayScreen implements Screen {
             if (Gdx.input.isKeyPressed(Input.Keys.LEFT) && player.b2body.getLinearVelocity().x >= -2)
                 player.b2body.applyLinearImpulse(new Vector2(-0.1f, 0), player.b2body.getWorldCenter(), true);
             if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE))
-                player.fire();
+                if (player.isFire())
+                    player.fire();
         }
 
     }
@@ -206,7 +207,7 @@ public class PlayScreen implements Screen {
         renderer.render();
 
         //renderer our Box2DDebugLines
-        b2dr.render(world, gamecam.combined);
+//        b2dr.render(world, gamecam.combined);
 
         game.batch.setProjectionMatrix(gamecam.combined);
         game.batch.begin();

@@ -108,7 +108,7 @@ public class MenuScreen implements Screen {
         exit.addListener(new InputListener() {
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 dispose();
-                System.exit(0);
+                Gdx.app.exit();
                 return true;
             }
 

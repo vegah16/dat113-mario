@@ -149,7 +149,7 @@ public class Mario extends Sprite {
         //create texture region for mario standing
         marioStand = new TextureRegion(screen.getAtlas().findRegion("little_mario"), 0, 0, 16, 16);
         bigMarioStand = new TextureRegion(screen.getAtlas().findRegion("big_mario"), 0, 0, 16, 32);
-        invincibleMarioStand = new TextureRegion(screen.getAtlas().findRegion("invinciblity_mario"), 80, 0, 16, 16);
+        invincibleMarioStand = new TextureRegion(screen.getAtlas().findRegion("invinciblity_mario"), 0, 0, 16, 16);
         fireMarioStand = new TextureRegion(screen.getAtlas().findRegion("fire_mario"), 0, 0, 16, 16);
 
         //create dead mario texture region
@@ -337,7 +337,7 @@ public class Mario extends Sprite {
             marioIsInvincible = true;
             timeToDefineInvincibleMario = true;
             setBounds(getX(), getY(), getWidth(), getHeight());
-            SuperMario.manager.get("audio/sounds/coin.wav", Sound.class).play();
+            SuperMario.manager.get("audio/sounds/powerup.wav", Sound.class).play();
 
             Timer.schedule(new Timer.Task(){
                 @Override
@@ -367,7 +367,7 @@ public class Mario extends Sprite {
                     setBounds(getX(), getY(), getWidth(), getHeight());
                     SuperMario.manager.get("audio/sounds/powerdown.wav", Sound.class).play();
                 }
-            }, 10);
+            }, 20);
         }
     }
 
@@ -668,7 +668,7 @@ public class Mario extends Sprite {
 
     public void fire() {
         SuperMario.manager.get("audio/sounds/fireball.wav", Sound.class).play();
-        fireballs.add(new FireBall(screen, b2body.getPosition().x, b2body.getPosition().y, runningRight ? true : false));
+        fireballs.add(new FireBall(screen, b2body.getPosition().x, b2body.getPosition().y, runningRight));
     }
 
     public void draw(Batch batch) {
