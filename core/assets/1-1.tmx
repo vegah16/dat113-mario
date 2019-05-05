@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.2.3" orientation="orthogonal" renderorder="right-down" width="240" height="13" tilewidth="16" tileheight="16" infinite="0" nextlayerid="9" nextobjectid="188">
+<map version="1.2" tiledversion="1.2.3" orientation="orthogonal" renderorder="right-down" width="240" height="13" tilewidth="16" tileheight="16" infinite="0" nextlayerid="9" nextobjectid="190">
  <tileset firstgid="1" name="tileset_gutter" tilewidth="16" tileheight="16" spacing="2" margin="1" tilecount="924" columns="33">
   <image source="tileset_gutter.png" width="594" height="504"/>
   <tile id="0">
@@ -144,7 +144,6 @@
   <object id="50" x="2960" y="128" width="16" height="64"/>
   <object id="51" x="2944" y="144" width="16" height="48"/>
   <object id="52" x="2928" y="160" width="16" height="32"/>
-  <object id="54" x="3184" y="176" width="16" height="16"/>
   <object id="159" x="-16" y="0" width="16" height="192"/>
   <object id="161" x="3840" y="0" width="16" height="192"/>
   <object id="169" x="448" y="160" width="48" height="32"/>
@@ -250,7 +249,8 @@
   <object id="152" x="2352" y="176" width="16" height="16"/>
  </objectgroup>
  <objectgroup id="9" name="Pole">
-  <object id="165" x="3184" y="0" width="16" height="192"/>
+  <object id="188" x="3184" y="0" width="16" height="192"/>
+  <object id="189" x="3218.67" y="-112.667"/>
  </objectgroup>
  <objectgroup id="10" name="Door">
   <object id="167" x="3312" y="160" width="16" height="32"/>
