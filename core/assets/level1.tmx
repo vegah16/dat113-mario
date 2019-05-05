@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.2.3" orientation="orthogonal" renderorder="right-down" width="240" height="13" tilewidth="16" tileheight="16" infinite="0" nextlayerid="11" nextobjectid="168">
+<map version="1.2" tiledversion="1.2.3" orientation="orthogonal" renderorder="right-down" width="240" height="13" tilewidth="16" tileheight="16" infinite="0" nextlayerid="9" nextobjectid="162">
  <tileset firstgid="1" name="tileset_gutter" tilewidth="16" tileheight="16" spacing="2" margin="1" tilecount="924" columns="33">
   <image source="tileset_gutter.png" width="594" height="504"/>
   <tile id="0">
@@ -118,7 +118,7 @@
  </layer>
  <layer id="2" name="Graphic Layer" width="240" height="13">
   <data encoding="base64" compression="zlib">
-   eJztl0tOwzAQhh3vgLYIWHXrJdAiAQWpN+MgwJpLFHq2brBpR50MHj9q5ylHfKpx/Phn7D9OtlKI7QFz4TK+tvI/XH2hUGgfafEvlHfyCHe963sfms8EDTBG6jgpc6fOO/QYiv4986rd2FPQf3+AR00d+Bb7Fy6u/K3LPwF55XK7kfsxXOM0tR82AfMOPYaiP5x1Fa+/K4wHpaj/z/nUdQ5DX9fa5Nwbqfvh1PGGGkPRHw74N/ceagLqXwN4Fcq285Z6F8aai/a0d40Ubri2KTmK7cvpgXvzA7b7Y0OJPb526wG9P4N/6WX77g3xb9fxFAo2lBinfyV5PsPvjoDrOJ8X/xb6iBLj9W+hMGaUyOffiTjSdVyp0O8wib6jmvyeOtO5Pa/q7+052oaSIz6ur2TGxbnmyiHjx8wJKGEv+1Di9L5U26n5Bg0UXz/Ov1Pdd6a5TNxPsC9Txugb5t37KyC2W33vDnnyOqJtX3HF0CXK4kFlySXVryxe4fo2rd2GT7/Nv+bMXSBSzmDYl12vb8y+C33m+GLDnrzSv4+aG6a9z7998I0vhpxrEINyeBDXUf2K8YqtDutPPZNwf6qB08Tl3+bf2eHsXYpjOXYNLnS7iWbasn9Xeq4XxGvl3ncr1A7qQp85uN2KzLlD92H+J4cOaJtDf47c0fFCYsi5BqHQ/Q5z0nqq3+UVWk/10/0Rqx/62zRwmrD+Z/IM4vz7gPz75lkDyr1us9AsM/jXHEuFOrlyU/KcP6eFOr8uW1So
+   eJztl81OwzAMx7PegG0IOO2aI7AhAQNpb8aDABJw4SWACXiyXXC1WXOtOB9NunYlkX5alziJ7frftMtCqeWGsi2LKth4fyaT6RZUp7ytii1Se4SxJ+A5wgdcI3admL1j9933GLL/ayaD3cYeA+pS0ijNCeYF7bF9wPUn8OWRVym3uIZtnabqweV/H2LI/vuzGIT73xaoQ/zPG80J5oU3upbt3qSsjdh6qLvevsaQ/fcH9Zu6hprApV/TuzTvo2tN1O5jaIsyFTYk25gchc6V/MGxyQbTeN/Qao3LbrGH788mrb4Ar8BbIevX5/zNZNpGq/7q1/S//P0GfoBf0rcy2K3YmMR/Opsz3UGr/uo3k+kzWqXT71BtaTuuWPhZWpDvqCa/pw4gt4eD6nt7CltfUsQnzS2EdWmupWuf9UP2RLQyX7vQqv5c7lvdfKMPHNc8Sb8jmDsGjiPrCesyZo2uUb57v3vEdg5jF0STpwG2XcUWQ5togwa1IZfcf23QijS3ad9NuPw36bc8c6eEmDMY6zImvhTPgJC6893PFRvV5An8XgNngr1Lv13QjSuGlPcgBG3RIO3j/mtBK6Y+6n9sPdL53AfJJyn/Jv2ON2fvTG2vQ+/BEdgNgVEC/YY8A+Zgd0e4H9jrbk7sQvejdnO254qM4/43Fj/QNoX/deExmGrHFkPKe+ALr3fck/dz/21a4f3cf14fof7jfJMPkk/U/1v2DJL0e0X0++C4B5xLsJkCswT6LY+lTJVUucl5Tp/TTJU/3oRX1A==
   </data>
  </layer>
  <objectgroup id="3" name="Ground">
@@ -151,7 +151,10 @@
   <object id="51" x="2944" y="144" width="16" height="48"/>
   <object id="52" x="2928" y="160" width="16" height="32"/>
   <object id="53" x="2912" y="176" width="16" height="16"/>
-  <object id="159" x="-16" y="0" width="16" height="208"/>
+  <object id="54" x="3184" y="176" width="16" height="16"/>
+  <object id="158" x="0" y="160" width="32" height="32"/>
+  <object id="159" x="-16" y="0" width="16" height="192"/>
+  <object id="161" x="3840" y="0" width="16" height="192"/>
  </objectgroup>
  <objectgroup id="4" name="Pipes">
   <object id="61" x="3568" y="128" width="32" height="64"/>
@@ -165,7 +168,11 @@
   <object id="157" x="3840" y="0" width="16" height="208"/>
  </objectgroup>
  <objectgroup id="5" name="Coins">
-  <object id="70" x="256" y="128" width="16" height="16"/>
+  <object id="70" x="256" y="128" width="16" height="16">
+   <properties>
+    <property name="star" value=""/>
+   </properties>
+  </object>
   <object id="71" x="336" y="128" width="16" height="16">
    <properties>
     <property name="mushroom" value=""/>
@@ -187,6 +194,7 @@
   <object id="81" x="2096" y="64" width="16"/>
   <object id="83" x="2096" y="64" width="16" height="16"/>
   <object id="84" x="2736" y="128" width="16" height="16"/>
+  <object id="153" x="464" y="96" width="16" height="16"/>
  </objectgroup>
  <objectgroup id="6" name="Bricks">
   <object id="85" x="2752" y="128" width="16" height="16"/>
@@ -232,8 +240,10 @@
   <object id="161" x="384" y="176" width="16" height="16"/>
  </objectgroup>
  <objectgroup id="8" name="Turtles">
+  <object id="150" x="400" y="176" width="16" height="16"/>
   <object id="151" x="864" y="176" width="16" height="16"/>
   <object id="152" x="2352" y="176" width="16" height="16"/>
+  <object id="160" x="3728" y="176" width="16" height="16"/>
  </objectgroup>
  <objectgroup id="9" name="Pole">
   <object id="165" x="3184" y="0" width="16" height="192"/>

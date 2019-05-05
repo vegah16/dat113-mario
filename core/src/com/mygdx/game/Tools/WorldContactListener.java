@@ -77,16 +77,16 @@ public class WorldContactListener implements ContactListener {
                 else
                     ((Mario) fixB.getUserData()).goNextMap();
                 break;
-            case SuperMario.MARIO_BIT | SuperMario.DOOR_BIT:
-                if (SuperMario.mapSourcesIterator.hasNext()){
-                    SuperMario.setScreen(new PlayScreen(game, SuperMario.mapSourcesIterator.next()));
-                }
-                else {
-                    SuperMario.mapSourcesIterator = SuperMario.mapSources.iterator();
-                    game.setScreen(new PlayScreen((SuperMario) game, SuperMario.mapSourcesIterator.next()));
-                }
-                dispose();
-                break;
+//            case SuperMario.MARIO_BIT | SuperMario.DOOR_BIT:
+//                if (SuperMario.mapSourcesIterator.hasNext()){
+//                    SuperMario.setScreen(new PlayScreen(game, SuperMario.mapSourcesIterator.next()));
+//                }
+//                else {
+//                    SuperMario.mapSourcesIterator = SuperMario.mapSources.iterator();
+//                    game.setScreen(new PlayScreen((SuperMario) game, SuperMario.mapSourcesIterator.next()));
+//                }
+//                dispose();
+//                break;
 
         }
     }

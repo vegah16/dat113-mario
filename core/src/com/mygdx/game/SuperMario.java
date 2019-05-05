@@ -5,12 +5,10 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.Screens.PlayScreen;
 
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.Stack;
 
 public class SuperMario extends Game {
     //Virtual Screen size and Box2D Scale(Pixels Per Meter)

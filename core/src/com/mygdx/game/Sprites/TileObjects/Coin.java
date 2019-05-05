@@ -9,6 +9,7 @@ import com.mygdx.game.Scenes.Hud;
 import com.mygdx.game.Screens.PlayScreen;
 import com.mygdx.game.Sprites.Items.ItemDef;
 import com.mygdx.game.Sprites.Items.Mushroom;
+import com.mygdx.game.Sprites.Items.Star;
 import com.mygdx.game.Sprites.Mario;
 import com.mygdx.game.SuperMario;
 
@@ -33,7 +34,15 @@ public class Coin extends InteractiveTileObject {
                 screen.spawnItem(new ItemDef(new Vector2(body.getPosition().x, body.getPosition().y + 16 / SuperMario.PPM),
                         Mushroom.class));
                 SuperMario.manager.get("audio/sounds/powerup_spawn.wav", Sound.class).play();
-            } else
+
+            }
+            if (object.getProperties().containsKey("star")) {
+                screen.spawnItem(new ItemDef(new Vector2(body.getPosition().x, body.getPosition().y + 16 / SuperMario.PPM),
+                        Star.class));
+                SuperMario.manager.get("audio/sounds/coin.wav", Sound.class).play();
+
+            }
+            else
                 SuperMario.manager.get("audio/sounds/coin.wav", Sound.class).play();
             getCell().setTile(tileSet.getTile(BLANK_COIN));
             Hud.addScore(100);

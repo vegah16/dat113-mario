@@ -38,15 +38,24 @@ public class Mario extends Sprite {
     private Animation marioRun;
     private TextureRegion marioJump;
     private TextureRegion marioDead;
+
     private TextureRegion bigMarioStand;
-    private TextureRegion bigMarioJump;
     private Animation bigMarioRun;
+    private TextureRegion bigMarioJump;
+
+    private TextureRegion invincibleMarioStand;
+    private Animation invincibleMarioRun;
+    private TextureRegion invincibleMarioJump;
+
     private Animation growMario;
     private float stateTimer;
     private boolean runningRight;
     private boolean marioIsBig;
     private boolean runGrowAnimation;
     private boolean timeToDefineBigMario;
+    private boolean marioIsInvincible;
+    private boolean runInvincibleAnimation;
+    private boolean timeToDefineInvincibleMario;
     private boolean timeToRedefineMario;
     private boolean marioIsDead;
     private boolean marioHasFinishedMap;
@@ -78,6 +87,12 @@ public class Mario extends Sprite {
 
         frames.clear();
 
+        for (int i = 1; i < 4; i++)
+            frames.add(new TextureRegion(screen.getAtlas().findRegion("little_mario"), i * 16, 0, 16, 16));
+        invincibleMarioRun = new Animation(0.1f, frames);
+
+        frames.clear();
+
         //get set animation frames from growing mario
         frames.add(new TextureRegion(screen.getAtlas().findRegion("big_mario"), 240, 0, 16, 32));
         frames.add(new TextureRegion(screen.getAtlas().findRegion("big_mario"), 0, 0, 16, 32));
@@ -89,10 +104,12 @@ public class Mario extends Sprite {
         //get jump animation frames and add them to marioJump Animation
         marioJump = new TextureRegion(screen.getAtlas().findRegion("little_mario"), 80, 0, 16, 16);
         bigMarioJump = new TextureRegion(screen.getAtlas().findRegion("big_mario"), 80, 0, 16, 32);
+        invincibleMarioJump = new TextureRegion(screen.getAtlas().findRegion("little_mario"), 80, 0, 16, 16);
 
         //create texture region for mario standing
         marioStand = new TextureRegion(screen.getAtlas().findRegion("little_mario"), 0, 0, 16, 16);
         bigMarioStand = new TextureRegion(screen.getAtlas().findRegion("big_mario"), 0, 0, 16, 32);
+        invincibleMarioStand = new TextureRegion(screen.getAtlas().findRegion("little_mario"), 0, 0, 16, 16);
 
         //create dead mario texture region
         marioDead = new TextureRegion(screen.getAtlas().findRegion("little_mario"), 96, 0, 16, 16);
@@ -127,12 +144,16 @@ public class Mario extends Sprite {
         //update our sprite to correspond with the position of our Box2D body
         if (marioIsBig)
             setPosition(b2body.getPosition().x - getWidth() / 2, b2body.getPosition().y - getHeight() / 2 - 6 / SuperMario.PPM);
+        else if (marioIsInvincible)
+            setPosition(b2body.getPosition().x - getWidth() / 2, b2body.getPosition().y - getHeight() / 2 - 6 / SuperMario.PPM);
         else
             setPosition(b2body.getPosition().x - getWidth() / 2, b2body.getPosition().y - getHeight() / 2);
         //update sprite with the correct frame depending on marios current action
         setRegion(getFrame(dt));
         if (timeToDefineBigMario)
             defineBigMario();
+        if (timeToDefineInvincibleMario)
+            defineInvincibleMario();
         if (timeToRedefineMario)
             redefineMario();
 
@@ -162,16 +183,19 @@ public class Mario extends Sprite {
                 }
                 break;
             case JUMPING:
-                region = marioIsBig ? bigMarioJump : marioJump;
+                //usikker på om dette er rett
+                region = marioIsBig ? bigMarioJump : marioIsInvincible ? invincibleMarioJump : marioJump;
                 break;
             case NEXTMAP:
             case RUNNING:
-                region = (TextureRegion) (marioIsBig ? bigMarioRun.getKeyFrame(stateTimer, true) : marioRun.getKeyFrame(stateTimer, true));
+                //usikker på om dette er rett
+                region = (TextureRegion) (marioIsBig ? bigMarioRun.getKeyFrame(stateTimer, true) : marioIsInvincible ? invincibleMarioRun.getKeyFrame(stateTimer, true) : marioRun.getKeyFrame(stateTimer, true));
                 break;
             case FALLING:
             case STANDING:
             default:
-                region = marioIsBig ? bigMarioStand : marioStand;
+                //usikker på om dette er rett
+                region = marioIsBig ? bigMarioStand : marioIsInvincible ? invincibleMarioStand : marioStand;
                 break;
         }
 
@@ -226,6 +250,16 @@ public class Mario extends Sprite {
             timeToDefineBigMario = true;
             setBounds(getX(), getY(), getWidth(), getHeight() * 2);
             SuperMario.manager.get("audio/sounds/powerup.wav", Sound.class).play();
+        }
+    }
+
+    public void growInvincible() {
+        if (!isInvincible()) {
+            runGrowAnimation = true;
+            marioIsInvincible = true;
+            timeToDefineInvincibleMario = true;
+            setBounds(getX(), getY(), getWidth(), getHeight() * 2);
+            SuperMario.manager.get("audio/sounds/coin.wav", Sound.class).play();
         }
     }
 
@@ -295,6 +329,10 @@ public class Mario extends Sprite {
         return marioIsBig;
     }
 
+    public boolean isInvincible() {
+        return marioIsInvincible;
+    }
+
     public void jump() {
         if (currentState != State.JUMPING) {
             b2body.applyLinearImpulse(new Vector2(0, 4f), b2body.getWorldCenter(), true);
@@ -311,7 +349,14 @@ public class Mario extends Sprite {
                 timeToRedefineMario = true;
                 setBounds(getX(), getY(), getWidth(), getHeight() / 2);
                 SuperMario.manager.get("audio/sounds/powerdown.wav", Sound.class).play();
-            } else {
+            }
+            if (marioIsInvincible) {
+                marioIsInvincible = false;
+                timeToRedefineMario = true;
+                setBounds(getX(), getY(), getWidth(), getHeight() / 2);
+                SuperMario.manager.get("audio/sounds/powerdown.wav", Sound.class).play();
+            }
+            else {
                 die();
             }
         }
@@ -391,6 +436,42 @@ public class Mario extends Sprite {
 
         b2body.createFixture(fdef).setUserData(this);
         timeToDefineBigMario = false;
+    }
+
+    public void defineInvincibleMario() {
+        Vector2 currentPosition = b2body.getPosition();
+        world.destroyBody(b2body);
+
+        BodyDef bdef = new BodyDef();
+        bdef.position.set(currentPosition.add(0, 10 / SuperMario.PPM));
+        bdef.type = BodyDef.BodyType.DynamicBody;
+        b2body = world.createBody(bdef);
+
+        FixtureDef fdef = new FixtureDef();
+        CircleShape shape = new CircleShape();
+        shape.setRadius(6 / SuperMario.PPM);
+        fdef.filter.categoryBits = SuperMario.MARIO_BIT;
+        fdef.filter.maskBits = SuperMario.GROUND_BIT |
+                SuperMario.COIN_BIT |
+                SuperMario.BRICK_BIT |
+                SuperMario.ENEMY_BIT |
+                SuperMario.OBJECT_BIT |
+                SuperMario.ENEMY_HEAD_BIT |
+                SuperMario.ITEM_BIT;
+
+        fdef.shape = shape;
+        b2body.createFixture(fdef).setUserData(this);
+        shape.setPosition(new Vector2(0, -14 / SuperMario.PPM));
+        b2body.createFixture(fdef).setUserData(this);
+
+        EdgeShape head = new EdgeShape();
+        head.set(new Vector2(-2 / SuperMario.PPM, 6 / SuperMario.PPM), new Vector2(2 / SuperMario.PPM, 6 / SuperMario.PPM));
+        fdef.filter.categoryBits = SuperMario.MARIO_HEAD_BIT;
+        fdef.shape = head;
+        fdef.isSensor = true;
+
+        b2body.createFixture(fdef).setUserData(this);
+        timeToDefineInvincibleMario = false;
     }
 
     public void defineMario() {
