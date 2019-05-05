@@ -219,8 +219,13 @@ public class Mario extends Sprite {
                 }
                 break;
             case JUMPING:
-                //usikker på om dette er rett
-                region = marioIsBig ? bigMarioJump : marioIsInvincible ? invincibleMarioJump : marioJump;
+                if  (marioIsBig){
+                    region = bigMarioJump;
+                } else if (marioIsInvincible){
+                    region = invincibleMarioJump;
+                } else {
+                    region = marioJump;
+                }
                 break;
             case NEXTMAP:
                 if (marioIsBig){
@@ -229,14 +234,24 @@ public class Mario extends Sprite {
                     region = (TextureRegion) marioRun.getKeyFrame(stateTimer, true);
                 }
             case RUNNING:
-                //usikker på om dette er rett
-                region = (TextureRegion) (marioIsBig ? bigMarioRun.getKeyFrame(stateTimer, true) : marioIsInvincible ? invincibleMarioRun.getKeyFrame(stateTimer, true) : marioRun.getKeyFrame(stateTimer, true));
+                if  (marioIsBig){
+                    region = (TextureRegion) bigMarioRun.getKeyFrame(stateTimer, true);
+                } else if (marioIsInvincible){
+                    region = (TextureRegion) invincibleMarioRun.getKeyFrame(stateTimer, true);
+                } else {
+                    region = (TextureRegion) marioRun.getKeyFrame(stateTimer, true);
+                }
                 break;
             case FALLING:
             case STANDING:
             default:
-                //usikker på om dette er rett
-                region = marioIsBig ? bigMarioStand : marioIsInvincible ? invincibleMarioStand : marioStand;
+                if  (marioIsBig){
+                    region = bigMarioStand;
+                } else if (marioIsInvincible){
+                    region = invincibleMarioStand;
+                } else {
+                    region = marioStand;
+                }
                 break;
         }
 
@@ -300,6 +315,16 @@ public class Mario extends Sprite {
             timeToDefineInvincibleMario = true;
             setBounds(getX(), getY(), getWidth(), getHeight() * 2);
             SuperMario.manager.get("audio/sounds/coin.wav", Sound.class).play();
+
+            Timer.schedule(new Timer.Task(){
+                @Override
+                public void run() {
+                    marioIsInvincible = false;
+                    timeToRedefineMario = true;
+                    setBounds(getX(), getY(), getWidth(), getHeight() / 2);
+                    SuperMario.manager.get("audio/sounds/powerdown.wav", Sound.class).play();
+                }
+            }, 10);
         }
     }
 
@@ -394,14 +419,11 @@ public class Mario extends Sprite {
         if (enemy instanceof Turtle && ((Turtle) enemy).currentState == Turtle.State.STANDING_SHELL)
             ((Turtle) enemy).kick(enemy.b2body.getPosition().x > b2body.getPosition().x ? Turtle.KICK_RIGHT : Turtle.KICK_LEFT);
         else {
-            if (marioIsBig) {
-                marioIsBig = false;
-                timeToRedefineMario = true;
-                setBounds(getX(), getY(), getWidth(), getHeight() / 2);
-                SuperMario.manager.get("audio/sounds/powerdown.wav", Sound.class).play();
+            if (marioIsInvincible){
+                enemy.setToDestroy();
             }
-            if (marioIsInvincible) {
-                marioIsInvincible = false;
+             else if (marioIsBig) {
+                marioIsBig = false;
                 timeToRedefineMario = true;
                 setBounds(getX(), getY(), getWidth(), getHeight() / 2);
                 SuperMario.manager.get("audio/sounds/powerdown.wav", Sound.class).play();
