@@ -169,7 +169,7 @@ public class Mario extends Sprite {
         // the !isDead() method is used to prevent multiple invocation
         // of "die music" and jumping
         // there is probably better ways to do that but it works for now.
-        if (screen.getHud().isTimeUp() && !isDead()) {
+        if (SuperMario.getHud().isTimeUp() && !isDead()) {
             die();
         }
 
@@ -334,6 +334,8 @@ public class Mario extends Sprite {
 
             SuperMario.manager.get("audio/music/mario_music.ogg", Music.class).stop();
             SuperMario.manager.get("audio/sounds/mariodie.wav", Sound.class).play();
+            SuperMario.livesLeft--;
+            Hud.getMarioLabel().setText("MARIO x " + SuperMario.livesLeft);
             isDead = true;
             Filter filter = new Filter();
             filter.maskBits = SuperMario.NOTHING_BIT;
@@ -548,7 +550,7 @@ public class Mario extends Sprite {
 
     public void defineMario() {
         BodyDef bdef = new BodyDef();
-        bdef.position.set(0, 32 / SuperMario.PPM);
+        bdef.position.set(1, 32 / SuperMario.PPM);
         bdef.type = BodyDef.BodyType.DynamicBody;
         b2body = world.createBody(bdef);
 

@@ -27,12 +27,12 @@ public class Hud implements Disposable {
     private static boolean pause;
 
     //Scene2D widgets
-    private Label countdownLabel;
+    private static Label countdownLabel;
     private static Label scoreLabel;
     private Label timeLabel;
-    private Label levelLabel;
+    private static Label levelLabel;
     private Label worldLabel;
-    private Label marioLabel;
+    private static Label marioLabel;
 
     public Hud(SpriteBatch sb) {
         //define our tracking variables
@@ -60,7 +60,7 @@ public class Hud implements Disposable {
         timeLabel = new Label("TIME", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
         levelLabel = new Label("1-1", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
         worldLabel = new Label("WORLD", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-        marioLabel = new Label("MARIO", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+        marioLabel = new Label("MARIO x " + SuperMario.livesLeft, new Label.LabelStyle(new BitmapFont(), Color.WHITE));
 
         //add our labels to our table, padding the top, and giving them all equal width with expandX
         table.add(marioLabel).expandX().padTop(10);
@@ -97,6 +97,13 @@ public class Hud implements Disposable {
         scoreLabel.setText(String.format("%06d", score));
     }
 
+    public static void reset(){
+        setWorldTimer(300);
+        levelLabel.setText("1-1");
+        setScore(0);
+        setPause(false);
+    }
+
     @Override
     public void dispose() {
         stage.dispose();
@@ -112,6 +119,7 @@ public class Hud implements Disposable {
 
     public static void setWorldTimer(Integer worldTimer) {
         Hud.worldTimer = worldTimer;
+        countdownLabel.setText(String.format("%03d", worldTimer));
     }
 
     public static boolean isPause() {
@@ -120,5 +128,26 @@ public class Hud implements Disposable {
 
     public static void setPause(boolean pause) {
         Hud.pause = pause;
+    }
+
+    public static Label getLevelLabel() {
+        return levelLabel;
+    }
+
+    public static Integer getScore() {
+        return score;
+    }
+
+    public static void setScore(Integer score) {
+        Hud.score = score;
+        scoreLabel.setText(String.format("%06d", score));
+    }
+
+    public static Label getMarioLabel() {
+        return marioLabel;
+    }
+
+    public static void setMarioLabel(Label marioLabel) {
+        Hud.marioLabel = marioLabel;
     }
 }

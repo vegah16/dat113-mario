@@ -8,15 +8,22 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.mygdx.game.Scenes.Hud;
 import com.mygdx.game.SuperMario;
+
+import static com.google.gwt.thirdparty.guava.common.collect.Iterators.peekingIterator;
 
 
 public class GameOverScreen implements Screen {
+    private final BitmapFont bitmapFont;
     private Viewport viewport;
     private Stage stage;
 
@@ -27,20 +34,65 @@ public class GameOverScreen implements Screen {
         viewport = new FitViewport(SuperMario.V_WIDTH, SuperMario.V_HEIGHT, new OrthographicCamera());
         stage = new Stage(viewport, ((SuperMario) game).batch);
 
-        Label.LabelStyle font = new Label.LabelStyle(new BitmapFont(), Color.WHITE);
+        bitmapFont = new BitmapFont();
+        bitmapFont.getData().setScale(2);
 
         Table table = new Table();
         table.center();
+        table.top();
         table.setFillParent(true);
 
-        Label gameOverLabel = new Label("GAME OVER", font);
-        Label playAgainLabel = new Label("Click to Play Again", font);
+        TextButton.TextButtonStyle buttonStyle = new TextButton.TextButtonStyle();
+        buttonStyle.font =  bitmapFont;
+        buttonStyle.fontColor = Color.WHITE;
 
-        table.add(gameOverLabel).expandX();
+
+        BitmapFont bitmapFontScaled2x = new BitmapFont();
+        bitmapFontScaled2x.getData().setScale(2.5f);
+        Label gameTitle = new Label("Game Over", new Label.LabelStyle(bitmapFont, Color.RED));
+
+
+        TextButton playAgainButton = new TextButton("Play again", buttonStyle);
+        playAgainButton.padTop(10);
+        playAgainButton.center();
+
+        playAgainButton.addListener(new InputListener() {
+            public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+                SuperMario.mapSourcesIterator = SuperMario.mapSources.listIterator();
+                Hud.reset();
+                game.setScreen(new PlayScreen((SuperMario) game, SuperMario.mapSourcesIterator.next()));
+                dispose();
+                return true;
+            }
+
+            public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
+            }
+
+        });
+
+        TextButton menu = new TextButton("Menu", buttonStyle);
+        menu.center();
+
+        menu.addListener(new InputListener() {
+            public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+                game.setScreen(new MenuScreen(game));
+                dispose();
+                return true;
+            }
+
+            public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
+            }
+
+        });
+
+        table.add(gameTitle);
         table.row();
-        table.add(playAgainLabel).expandX().padTop(10f);
-
+        table.add(playAgainButton);
+        table.row();
+        table.add(menu);
         stage.addActor(table);
+
+        Gdx.input.setInputProcessor(stage);
     }
 
     @Override
@@ -50,16 +102,6 @@ public class GameOverScreen implements Screen {
 
     @Override
     public void render(float delta) {
-        if (Gdx.input.justTouched() || Gdx.input.isKeyJustPressed(Input.Keys.ANY_KEY)) {
-            if (SuperMario.mapSourcesIterator.hasNext()){
-                game.setScreen(new PlayScreen((SuperMario) game, SuperMario.mapSourcesIterator.next()));
-            }
-            else {
-                SuperMario.mapSourcesIterator = SuperMario.mapSources.iterator();
-                game.setScreen(new PlayScreen((SuperMario) game, SuperMario.mapSourcesIterator.next()));
-            }
-            dispose();
-        }
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         stage.draw();

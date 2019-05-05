@@ -2,7 +2,10 @@ package com.mygdx.game.desktop;
 
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
+import com.mygdx.game.Screens.MenuScreen;
 import com.mygdx.game.SuperMario;
+
+import java.awt.*;
 
 public class DesktopLauncher {
 

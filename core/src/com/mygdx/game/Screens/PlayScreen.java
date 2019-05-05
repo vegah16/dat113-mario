@@ -39,7 +39,6 @@ public class PlayScreen implements Screen {
     //basic playscreen variables
     private OrthographicCamera gamecam;
     private Viewport gamePort;
-    private Hud hud;
 
     //Tiled map variables
     private TmxMapLoader maploader;
@@ -70,9 +69,6 @@ public class PlayScreen implements Screen {
         //create a FitViewport to maintain virtual aspect ratio despite screen size
         gamePort = new FitViewport(SuperMario.V_WIDTH / SuperMario.PPM, SuperMario.V_HEIGHT / SuperMario.PPM, gamecam);
 
-        //create our game HUD for scores/timers/level info
-        hud = new Hud(game.batch);
-
         //Load our map and setup our map renderer
         maploader = new TmxMapLoader();
         map = maploader.load(mapSrc);
@@ -100,6 +96,7 @@ public class PlayScreen implements Screen {
 
         items = new Array<Item>();
         itemsToSpawn = new LinkedBlockingQueue<ItemDef>();
+
     }
 
     public void spawnItem(ItemDef idef) {
@@ -133,8 +130,10 @@ public class PlayScreen implements Screen {
     public void handleInput(float dt) {
         // Temporarily terminates program when pressing ESCAPE
         // TODO: Implement termination in menu instead
-        if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE))
-            System.exit(0);
+        if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)){
+            game.setScreen(new MenuScreen(game));
+        }
+
 
         //control our player using immediate impulses
         if (player.currentState != Mario.State.DEAD && player.currentState != Mario.State.NEXTMAP) {
@@ -169,7 +168,7 @@ public class PlayScreen implements Screen {
         for (Item item : items)
             item.update(dt);
 
-        hud.update(dt);
+        SuperMario.getHud().update(dt);
 
         //attach our gamecam to our players.x coordinate
         if (player.currentState != Mario.State.DEAD) {
@@ -217,21 +216,47 @@ public class PlayScreen implements Screen {
         game.batch.end();
 
         //Set our batch to now draw what the Hud camera sees.
-        game.batch.setProjectionMatrix(hud.stage.getCamera().combined);
-        hud.stage.draw();
+        game.batch.setProjectionMatrix(SuperMario.getHud().stage.getCamera().combined);
+        SuperMario.getHud().stage.draw();
 
         if (gameOver()) {
-            game.setScreen(new GameOverScreen(game));
+            // Game is not finished
+            if (SuperMario.mapSourcesIterator.hasNext()){
+
+                // No more lives
+                if (SuperMario.livesLeft <= 0){
+                    SuperMario.setLivesLeft(SuperMario.difficulty);
+                    Hud.getMarioLabel().setText("MARIO x " + SuperMario.livesLeft);
+                    game.setScreen(new GameOverScreen(game));
+                }
+                // More lives
+                else {
+                    var previousMap = SuperMario.mapSourcesIterator.previous();
+                    game.setScreen(new PlayScreen(game, SuperMario.mapSourcesIterator.next()));
+                    Hud.setWorldTimer(300);
+                }
+            }
+            // Game is finished
+            else {
+                SuperMario.setLivesLeft(SuperMario.difficulty);
+                game.setScreen(new GameOverScreen(game));
+            }
             dispose();
         }
 
         if (nextGame()) {
+            // Game is finished
             if (SuperMario.mapSourcesIterator.hasNext()){
-                game.setScreen(new PlayScreen(game, SuperMario.mapSourcesIterator.next()));
+                var nextMap = SuperMario.mapSourcesIterator.next();
+                game.setScreen(new PlayScreen(game, nextMap));
+                Hud.setPause(false);
+                Hud.getLevelLabel().setText(nextMap.substring(0, nextMap.indexOf(".")));
             }
+            // Game is not finished
             else {
-                SuperMario.mapSourcesIterator = SuperMario.mapSources.iterator();
-                game.setScreen(new PlayScreen(game, SuperMario.mapSourcesIterator.next()));
+                game.setScreen(new GameOverScreen(game));
+//                SuperMario.mapSourcesIterator = SuperMario.mapSources.iterator();
+//                game.setScreen(new PlayScreen(game, SuperMario.mapSourcesIterator.next()));
             }
             dispose();
         }
@@ -246,7 +271,8 @@ public class PlayScreen implements Screen {
     }
 
     public boolean nextGame() {
-        if (player.currentState == Mario.State.NEXTMAP && player.getStateTimer() > 5.5) {
+//        if (player.currentState == Mario.State.NEXTMAP && player.getStateTimer() > 5.5) {
+        if (player.currentState == Mario.State.NEXTMAP && player.getStateTimer() > 0) {
             return true;
         }
         return false;
@@ -289,10 +315,5 @@ public class PlayScreen implements Screen {
         renderer.dispose();
         world.dispose();
         b2dr.dispose();
-        hud.dispose();
-    }
-
-    public Hud getHud() {
-        return hud;
     }
 }

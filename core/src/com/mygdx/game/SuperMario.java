@@ -5,10 +5,13 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.mygdx.game.Scenes.Hud;
+import com.mygdx.game.Screens.MenuScreen;
 import com.mygdx.game.Screens.PlayScreen;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.ListIterator;
 
 public class SuperMario extends Game {
     //Virtual Screen size and Box2D Scale(Pixels Per Meter)
@@ -33,7 +36,12 @@ public class SuperMario extends Game {
     public static final short DOOR_BIT = 4096;
 
     public static ArrayList<String> mapSources;
-    public static Iterator<String> mapSourcesIterator;
+    public static ListIterator<String> mapSourcesIterator;
+
+    public static Hud hud;
+
+    public static int difficulty;
+    public static int livesLeft;
 
     public SpriteBatch batch;
 
@@ -62,12 +70,23 @@ public class SuperMario extends Game {
         manager.finishLoading();
 
         mapSources = new ArrayList<String>();
-        mapSources.add("level1.tmx");
-        mapSources.add("level2.tmx");
-        mapSources.add("level3.tmx");
-        mapSourcesIterator = mapSources.iterator();
+        mapSources.add("1-1.tmx");
+        mapSources.add("1-2.tmx");
+        mapSources.add("1-3.tmx");
 
-        setScreen(new PlayScreen(this, mapSourcesIterator.next()));
+        // Set difficulty.
+        // 1 = Easy, , 6 life
+        // 2 = Medium, 3 life
+        // 3 = Hard, 1 life
+//        difficulty = 2;
+//        setLivesLeft(difficulty);
+
+        //create our game HUD for scores/timers/level info
+        hud = new Hud(this.batch);
+
+
+//        setScreen(new PlayScreen(this, mapSourcesIterator.next()));
+        setScreen(new MenuScreen(this));
     }
 
 
@@ -81,5 +100,32 @@ public class SuperMario extends Game {
     @Override
     public void render() {
         super.render();
+    }
+
+    public static Hud getHud() {
+        return hud;
+    }
+
+    public static void setHud(Hud hud) {
+        SuperMario.hud = hud;
+    }
+
+    public static int getLivesLeft() {
+        return livesLeft;
+    }
+
+    public static void setLivesLeft(int difficulty) {
+        switch (difficulty){
+            case 1:
+                livesLeft = 6;
+                break;
+            case 2:
+                livesLeft = 3;
+                break;
+            case 3:
+                livesLeft = 1;
+                break;
+            default:
+        }
     }
 }
